@@ -47,7 +47,7 @@ const Navbar = () => {
     const [dropen, setDropen] = useState(false);
 
     const getdetailvaliduser = async () => {
-        const res = await fetch("/validuser", {
+        const res = await fetch("https://ecommerece-backend-4lqb.onrender.com/validuser", {
             method: "GET",
             headers: {
                 Accept: "application/json",
@@ -78,7 +78,7 @@ const Navbar = () => {
     }
 
     const logoutuser = async () => {
-        const res2 = await fetch("/logout", {
+        const res2 = await fetch("https://ecommerece-backend-4lqb.onrender.com/logout", {
             method: "GET",
             headers: {
                 Accept: "application/json",

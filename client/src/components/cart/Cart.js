@@ -24,7 +24,7 @@ const Cart = () => {
   //console.log([inddata]);
 
     const getinddata = async () => {
-        const res = await fetch(`/getproductsone/${id}`, {
+        const res = await fetch(`https://ecommerece-backend-4lqb.onrender.com/getproductsone/${id}`, {
             method: "GET",
             headers: {
                 Accept: "application/json",
@@ -51,7 +51,7 @@ const Cart = () => {
      //add to cart
      const addtocart=async(id)=>{
          
-          const checkres=await fetch(`/addcart/${id}`,{
+          const checkres=await fetch(`https://ecommerece-backend-4lqb.onrender.com/addcart/${id}`,{
              method:"POST",
              headers:{
                 Accept:"application/json",

@@ -12,7 +12,7 @@ const Option=({deletedata,get})=>{
 
      const removedata=async(req,res)=>{
          try{
-            const res=await fetch(`/remove/${deletedata}`,{
+            const res=await fetch(`https://ecommerece-backend-4lqb.onrender.com/remove/${deletedata}`,{
                 method:"DELETE",
                 headers:{
                     Accept:"applicaton/json",

@@ -36,7 +36,7 @@ const Sign_in = () => {
 
         const {email,password}=logdata;
 
-        const res=await fetch("/login",{
+        const res=await fetch("https://ecommerece-backend-4lqb.onrender.com/login",{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
