@@ -2,7 +2,7 @@ import React from 'react'
 import {useState} from 'react'
 import {useEffect} from 'react'
 import {loadStripe} from '@stripe/stripe-js'
-//export const url=process.env.REACT_APP_BASE_URL;
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Right = ({item}) => {
 
@@ -33,7 +33,7 @@ const Right = ({item}) => {
      const headers={
       "Content-Type":"application/json"
      }
-     const response=await fetch(`http://localhost:8000/api/create-checkout-session`,{
+     const response=await fetch(`${BASE_URL}/api/create-checkout-session`,{
       method:"POST",
       headers:headers,
       body:JSON.stringify(body)

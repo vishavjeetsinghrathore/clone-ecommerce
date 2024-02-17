@@ -5,7 +5,7 @@ import {useState} from 'react'
 import {ToastContainer,toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { LoginContext } from '../context/ContextProvider';
-
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Sign_in = () => {
 
@@ -36,7 +36,7 @@ const Sign_in = () => {
 
         const {email,password}=logdata;
 
-        const res=await fetch("https://ecommerece-backend-4lqb.onrender.com/login",{
+        const res=await fetch(`${BASE_URL}/login`,{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"

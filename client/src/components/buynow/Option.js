@@ -4,7 +4,7 @@ import { LoginContext } from '../context/ContextProvider';
 import { useContext } from 'react';
 import { ToastContainer,toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-//export const url=process.env.REACT_APP_BASE_URL;
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Option=({deletedata,get})=>{
 
@@ -12,7 +12,7 @@ const Option=({deletedata,get})=>{
 
      const removedata=async(req,res)=>{
          try{
-            const res=await fetch(`https://ecommerece-backend-4lqb.onrender.com/remove/${deletedata}`,{
+            const res=await fetch(`${BASE_URL}/remove/${deletedata}`,{
                 method:"DELETE",
                 headers:{
                     Accept:"applicaton/json",

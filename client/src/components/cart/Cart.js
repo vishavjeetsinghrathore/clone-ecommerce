@@ -6,7 +6,7 @@ import {  useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import Footer from '../footer/Footer';
-//export const url=process.env.REACT_APP_BASE_URL;
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Cart = () => {
 
@@ -24,7 +24,7 @@ const Cart = () => {
   //console.log([inddata]);
 
     const getinddata = async () => {
-        const res = await fetch(`https://ecommerece-backend-4lqb.onrender.com/getproductsone/${id}`, {
+        const res = await fetch(`${BASE_URL}/getproductsone/${id}`, {
             method: "GET",
             headers: {
                 Accept: "application/json",
@@ -51,7 +51,7 @@ const Cart = () => {
      //add to cart
      const addtocart=async(id)=>{
          
-          const checkres=await fetch(`https://ecommerece-backend-4lqb.onrender.com/addcart/${id}`,{
+          const checkres=await fetch(`${BASE_URL}/addcart/${id}`,{
              method:"POST",
              headers:{
                 Accept:"application/json",

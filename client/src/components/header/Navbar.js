@@ -20,7 +20,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-//export const url=process.env.REACT_APP_BASE_URL;
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Navbar = () => {
     const { account, setAccount } = useContext(LoginContext);
@@ -47,7 +47,7 @@ const Navbar = () => {
     const [dropen, setDropen] = useState(false);
 
     const getdetailvaliduser = async () => {
-        const res = await fetch("https://ecommerece-backend-4lqb.onrender.com/validuser", {
+        const res = await fetch(`${BASE_URL}/validuser`, {
             method: "GET",
             headers: {
                 Accept: "application/json",
@@ -78,7 +78,7 @@ const Navbar = () => {
     }
 
     const logoutuser = async () => {
-        const res2 = await fetch("https://ecommerece-backend-4lqb.onrender.com/logout", {
+        const res2 = await fetch(`${BASE_URL}/logout`, {
             method: "GET",
             headers: {
                 Accept: "application/json",

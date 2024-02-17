@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 import {useState} from 'react'
 import {ToastContainer,toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const SIgnUp = () => {
 
@@ -35,7 +35,7 @@ const SIgnUp = () => {
          e.preventDefault();
          const {fname,email,mobile,password,cpassword}=udata;
 
-         const res=await fetch("https://ecommerece-backend-4lqb.onrender.com/register",{
+         const res=await fetch(`${BASE_URL}/register`,{
              method:"POST",
              headers:{
                 "Content-Type":"application/json"

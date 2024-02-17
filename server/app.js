@@ -22,10 +22,7 @@ app.use(
 		credentials:true,
 	})
 )
-// app.use(cors({
-//     origin: ["https://clone-ecommerce-olive.vercel.app"], // Specify your front-end app origin here
-//     credentials: true,
-// }));
+
 app.use(router);
 
 //create checkout api

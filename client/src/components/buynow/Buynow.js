@@ -5,14 +5,14 @@ import Option from './Option';
 import Subtotal from './Subtotal';
 import Right from './Right';
 import Footer from '../footer/Footer';
-//export const url=process.env.REACT_APP_BASE_URL;
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Buynow = () => {
     const [cartdata, setCartdata] = useState([]);
     console.log(cartdata);
 
     const getdatabuy = async () => {
-        const res = await fetch("https://ecommerece-backend-4lqb.onrender.com/cartdetails", {
+        const res = await fetch(`${BASE_URL}/cartdetails`, {
             method: "GET",
             headers: {
                 Accept: "application/json",
