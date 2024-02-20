@@ -1,4 +1,5 @@
 import React, {  useEffect, useState } from 'react'
+import axios from 'axios';
 import "./cart.css";
 import { LoginContext } from '../context/ContextProvider';
 import { CircularProgress, Divider } from '@mui/material';
@@ -8,6 +9,7 @@ import { useContext } from 'react';
 import Footer from '../footer/Footer';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
+
 const Cart = () => {
 
 
@@ -16,6 +18,7 @@ const Cart = () => {
    // console.log(id);
 
    const history=useNavigate("");
+   
 
     const {account,setAccount}=useContext(LoginContext)
 
@@ -23,62 +26,120 @@ const Cart = () => {
 
   //console.log([inddata]);
 
+    // const getinddata = async () => {
+    //     const res = await fetch(`${BASE_URL}/getproductsone/${id}`, {
+    //         method: "GET",
+    //         headers: {
+    //             Accept: "application/json",
+    //             "Content-Type": "application/json"
+    //         },
+    //         credentials: "include"
+    //     });
+
+    //     const data = await res.json();
+    //     //console.log(data);
+
+    //     if (res.status !== 201) {
+    //         alert("no data available")
+    //     } else {
+    //         // console.log("ind mila hain");
+    //         setInddata(data);
+    //     }
+    // };
+
+    // useEffect(()=>{
+    //    getinddata();
+    // },[id]);
     const getinddata = async () => {
-        const res = await fetch(`${BASE_URL}/getproductsone/${id}`, {
-            method: "GET",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            },
-            credentials: "include"
-        });
-
-        const data = await res.json();
-        //console.log(data);
-
-        if (res.status !== 201) {
-            alert("no data available")
-        } else {
-            // console.log("ind mila hain");
-            setInddata(data);
+        try {
+            const response = await axios.get(`${BASE_URL}/getproductsone/${id}`, {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                },
+                withCredentials: true
+            });
+    
+            if (response.status !== 201) {
+                alert("no data available");
+            } else {
+                setInddata(response.data);
+            }
+        } catch (error) {
+            console.error("An error occurred:", error.response);
         }
     };
-
-    useEffect(()=>{
-        setTimeout(getinddata,1000)
-    },[id]);
+    
+    useEffect(() => {
+        getinddata();
+    }, [id]);
 
      //add to cart
-     const addtocart=async(id)=>{
+    //  const addtocart=async(id)=>{
          
-          const checkres=await fetch(`${BASE_URL}/addcart/${id}`,{
-             method:"POST",
-             headers:{
-                Accept:"application/json",
-                "Content-Type":"application/json"
-             },
-             body:JSON.stringify({
-                inddata
-             }),
-             credentials:"include"
-          });
+    //       const checkres=await fetch(`${BASE_URL}/addcart/${id}`,{
+    //          method:"POST",
+    //          headers:{
+    //             Accept:"application/json",
+    //             "Content-Type":"application/json"
+    //          },
+    //          body:JSON.stringify({
+    //             inddata
+    //          }),
+    //          credentials:"include"
+    //       });
 
-          const data1=await checkres.json();
-          console.log(data1);
+    //       const data1=await checkres.json();
+    //       console.log(data1);
 
-          if(checkres.status==401 ||!data1)
-          {
-            console.log("user invalid");
-            alert("user invalid");
-          }
-          else
-          {
-            //alert("data added in your cart")
-            history("/buynow");
-            setAccount(data1)
-          }
+    //       if(checkres.status==401 ||!data1)
+    //       {
+    //         console.log("user invalid");
+    //         alert("user invalid");
+    //       }
+    //       else
+    //       {
+    //         //alert("data added in your cart")
+    //         history("/buynow");
+    //         setAccount(data1)
+    //       }
 
-     }
+    //  }
+    const addtocart = async (id) => {
+        try {
+            const tokenWithQuotes = localStorage.getItem("jwtToken"); // This retrieves the token, assuming it's stored with quotes.
+            const token = tokenWithQuotes.replace(/^"|"$/g, ''); // This removes quotes at the start and end of the string.
+            console.log(token);
+            console.log(token)
+
+            const response = await axios.post(`${BASE_URL}/addcart/${id}`, {
+                inddata,
+                token:token
+            }, {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                },
+                
+                withCredentials: true
+            });
+    
+            console.log(response.data);
+    
+            if (response.status == 401 || !response.data) {
+                console.log("user invalid");
+                alert("user invalid");
+            } else {
+                // If you're using React Router, make sure `history` is correctly instantiated
+                // For example, if using React Router v6, use `useNavigate` instead of `history`
+                history("/buynow"); // Ensure `history` is defined, might need to adjust based on your React Router version
+                setAccount(response.data);
+            }
+    
+        } catch (error) {
+            console.error("An error occurred:", error.response);
+        }
+    };
 
     return (
 

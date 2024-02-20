@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './buynow.css';
 import { Divider } from '@mui/material';
 import Option from './Option';
@@ -7,26 +8,51 @@ import Right from './Right';
 import Footer from '../footer/Footer';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
+
 const Buynow = () => {
     const [cartdata, setCartdata] = useState([]);
     console.log(cartdata);
 
+    // const getdatabuy = async () => {
+    //     const res = await fetch(`${BASE_URL}/cartdetails`, {
+    //         method: "GET",
+    //         headers: {
+    //             Accept: "application/json",
+    //             "Content-Type": "application/json"
+    //         },
+    //         credentials: "include"
+    //     });
+
+    //     const data = await res.json();
+
+    //     if (res.status !== 201) {
+    //         console.log("error");
+    //     } else {
+    //         setCartdata(data.carts);
+    //     }
+    // };
     const getdatabuy = async () => {
-        const res = await fetch(`${BASE_URL}/cartdetails`, {
-            method: "GET",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            },
-            credentials: "include"
-        });
+        try {
+            const tokenWithQuotes = localStorage.getItem("jwtToken"); // This retrieves the token, assuming it's stored with quotes.
+            const token = tokenWithQuotes.replace(/^"|"$/g, ''); // This removes quotes at the start and end of the string.
 
-        const data = await res.json();
-
-        if (res.status !== 201) {
-            console.log("error");
-        } else {
-            setCartdata(data.carts);
+            const res = await axios.get(`${BASE_URL}/cartdetails`,{
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                },
+                params:{
+                    token:token
+                }
+            });
+    
+            if (res.status !== 201) {
+                console.log("error");
+            } else {
+                setCartdata(res.data.carts);
+            }
+        } catch (error) {
+            console.error('An error occurred:', error.response);
         }
     };
 

@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios';
 import './signup.css'
 import { Divider } from '@mui/material'
 import { NavLink } from 'react-router-dom'
@@ -6,6 +7,7 @@ import {useState} from 'react'
 import {ToastContainer,toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 
 const SIgnUp = () => {
 
@@ -30,43 +32,83 @@ const SIgnUp = () => {
         })
     }
 
-    const senddata=async(e)=>{
+    // const senddata=async(e)=>{
 
-         e.preventDefault();
-         const {fname,email,mobile,password,cpassword}=udata;
+    //      e.preventDefault();
+    //      const {fname,email,mobile,password,cpassword}=udata;
 
-         const res=await fetch(`${BASE_URL}/register`,{
-             method:"POST",
-             headers:{
-                "Content-Type":"application/json"
-             },
-             body:JSON.stringify({
-                 fname,email,mobile,password,cpassword
-             })
-         });
+    //      const res=await fetch(`${BASE_URL}/register`,{
+    //          method:"POST",
+    //          headers:{
+    //             "Content-Type":"application/json"
+    //          },
+    //          body:JSON.stringify({
+    //              fname,email,mobile,password,cpassword
+    //          })
+    //      });
 
-         const data=await res.json();
+    //      const data=await res.json();
 
-        // console.log(data);
+    //     // console.log(data);
 
-        if(res.status===422 || !data)
-        {
-            toast.warning("invalid details",{
-                position:"top-center",
-            })
+    //     if(res.status===422 || !data)
+    //     {
+    //         toast.warning("invalid details",{
+    //             position:"top-center",
+    //         })
+    //     }
+    //     else
+    //     {
+    //         toast.success("data successfully added",{
+    //             position:"top-center",
+    //         })
+
+    //         setUdata({...udata,fname:"",email:"",mobile:"",password:"",cpassword:""});
+    //     }
+
+
+    // }
+    const senddata = async (e) => {
+        e.preventDefault();
+    
+        const { fname, email, mobile, password, cpassword } = udata;
+        
+
+        try {
+            const response = await axios.post(`${BASE_URL}/register`, {
+                fname, email, mobile, password, cpassword
+            }, {
+                headers: {
+                    "Content-Type": "application/json",
+                   
+                }
+            });
+    
+            // Assuming the API response structure
+            // console.log(response.data);
+    
+            toast.success("data successfully added", {
+                position: "top-center",
+            });
+    
+            // Resetting the form fields after successful registration
+            setUdata({ fname: "", email: "", mobile: "", password: "", cpassword: "" });
+    
+        } catch (error) {
+            // Assuming error.response exists and it has a status to check
+            if (error.response && (error.response.status === 422 || !error.response.data)) {
+                toast.warning("invalid details", {
+                    position: "top-center",
+                });
+            } else {
+                // Handling other kinds of errors (network issues, server down, etc.)
+                console.error("An error occurred:", error.message);
+                toast.error("An unexpected error occurred", {
+                    position: "top-center",
+                });
+            }
         }
-        else
-        {
-            toast.success("data successfully added",{
-                position:"top-center",
-            })
-
-            setUdata({...udata,fname:"",email:"",mobile:"",password:"",cpassword:""});
-        }
-
-
-    }
-
+    };
 
   return (
     <section>

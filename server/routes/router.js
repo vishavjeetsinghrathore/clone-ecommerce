@@ -111,7 +111,10 @@ router.post("/login", async (req, res) => {
                     httpOnly:true
                 })
 
-                res.status(201).json(userlogin);
+                res.status(201).json({
+                    "token":token,
+                    "user":userlogin
+                });
             }
 
         } else {
