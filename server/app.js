@@ -24,7 +24,7 @@ app.use(
 )
 
 app.use(router);
-
+const url1=process.env.FRONTEND_URL
 //create checkout api
 
 app.post("/api/create-checkout-session",async(req,res)=>{
@@ -57,8 +57,8 @@ app.post("/api/create-checkout-session",async(req,res)=>{
             payment_method_types:["card"],
             line_items:lineItems,
             mode:"payment",
-            success_url:"http://localhost:3000/success",
-            cancel_url:"http://localhost:3000/cancel",
+            success_url:`${url1}/success`,
+            cancel_url:`${url1}/cancel`,
             currency,// Dynamically set based on customer's location or transaction type
             customer_email:customerEmail,// Optional: Collect customer email
             shipping_address_collection:{
